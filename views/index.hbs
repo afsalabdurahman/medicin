@@ -1,5 +1,5 @@
  <div class="hero_area">
- <header class="header_section">
+ {{!-- <header class="header_section">
       <div class="container">
         <div class="top_contact-container">
           <div class="tel_container">
@@ -46,7 +46,7 @@
                   <a class="nav-link" href="medicine.html"> Medicine </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="buy.html"> Online Buy </a>
+                  <a class="nav-link" href="/buy"> Online Buy </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="news.html"> News </a>
@@ -91,7 +91,7 @@
 
         </nav>
       </div>
-    </header>
+    </header> --}}
     <section class=" slider_section position-relative">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -111,7 +111,7 @@
                 <div class="col-md-8">
                   <div class="detail-box">
                     
-                    <h2>HI  {{ user}}</h2>
+                    <h2  class="animate__animated animate__bounce"> HI  {{ user.name}}</h2>
                     
                     <h1>
                       Welcome To Our <br>

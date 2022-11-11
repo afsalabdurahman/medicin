@@ -1,60 +1,88 @@
+
 var db=require('../config/connection')
+var bcrypt=require('bcrypt')
+const { response } = require('../app')
 var objectId=require('mongodb').ObjectId
-const bcrypt = require('bcrypt');                    
-const { response } = require('../app');
-const { use } = require('../routes');
 
 
 module.exports={
-    register:(userDta)=>{
-       // console.log(userDta,"DBuserdta")
-        let loginstatus=false
-        let response={}
-        
-        return new Promise(async(resolve,reject)=>{
-             let pwd =userDta.password.toString();
-            userDta.password=await bcrypt.hash(pwd,10)
-            db.get().collection('pass').insertOne(userDta).then((response)=>{
-          ///  console.log(response)
-            response.status=true
-            response.user=userDta.name
-//            console.log(response.user,"db respon.user")
-                resolve(response)
-                
-                
-                
-            })
-        })
-    },
-    log:(password)=>{
-       console.log(password.password,"passww")
-        return new Promise(async(resolve, reject) => {
-            let loginstatus=false
-            let response={}
-            let user=await db.get().collection('pass').findOne({email:password.email})
-            console.log(user,"DB user")
+register:(userDatas)=>{
+    console.log(userDatas,"userdata")
+    return new Promise((resolve,reject)=>{
+        const saltRounds = 10;
+        const myPlaintextPassword = userDatas.password
+        const hash = bcrypt.hashSync(myPlaintextPassword, saltRounds);
+        console.log(hash)
+    userDatas.password=hash
+        db.get().collection('finalPlus').insertOne(userDatas).then((data)=>{
+            resolve(data)
+            console.log(data)
+            console.log(data.password)
+            console.log(userDatas.password)
+            console.log("hello")
             
-      if (user){
-        
-        bcrypt.compare (password.password .toString(),user.password).then((status)=>{
-            console.log(status,"DBstatus")
-if (status){
-    console.log("sucess")
-    response.status=true;
-    response.user=user;
-    resolve(response)
-    console.log(response,"DB RESOLVED RESPONSE")
-}else{
-    console.log("failed")
+            
+        })
+    })
+},
+log:(userData)=>{
+    console.log(userData)
     
-    resolve({status:false})
-}
-        })
-      }else{
-        console.log("user not found")
+    console.log(userData.email)
+    return new Promise(async(resolve,reject)=>{
+let status=false
+let respons={}
+let user=await db.get().collection('finalPlus').findOne({email:userData.email})
+console.log("user")
+console.log(user)
+
+if(user){
+
+    var val = bcrypt.compareSync(userData.password, user.password);
+        console.log(val)
+        if (val) {
+            respons.status=true
+            respons.user=user
+            resolve(respons)
+        }
+        else console.log("incorrect password")
         resolve({status:false})
-      }
+       
+        
+}
+     else{
+          console.log("user not found")
+          
+          resolve({status:false})
+          }
+      })
+},
+
+addCart:((proid)=>{
+    console.log(proid,"bdscsssss")
+    return new Promise((resolve, reject) => {
+        db.get().collection('Cart').insertOne(proid).then((data)=>{
+            resolve(data)
         })
-    }
+    })
+
+}),
+cartOrder:(()=>{
+    return new Promise(async(resolve, reject) => {
+        let proid= await db.get().collection('Cart').find()  
+        console.log(proid,"proid")
+       if(proid){
+       
+         let count= await db.get().collection('Cart').find({"id" : "1"}).count();
+          console.log(count,"count")
+          var arry=[proid,count]
+        resolve(arry)
+
+        }
+        })
+})
 
 }
+
+
+    
