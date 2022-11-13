@@ -9,23 +9,23 @@
     <div class="col-md-2">
     <div class="card" style="width:150px;hight:150px">
       
-  <img class="card-img-top" src="{{this.image}}" Card image cap>
+  <img class="card-img-top" src="{{this.image}}.jpg "Card image cap>
   <div class="card-body">
     
     <h6 class="card-title">Card title</h6>
     <p class="card-text">Some quick exakent.</p>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{!-- <a  href="/cart/?id={{this.image}}&val={{this.price}}&name=afsal" class="btn btn-primary" onclick="go({{this.price}})" >Go somewhere</a> --}}
-  <button type="submit" onclick="go('{{this.id}}','{{this.image}}')">Add to Cart</button>
+  <button type="submit" onclick="go('{{this.id}}')">Add to Cart</button>
   </div>
   </div>
    </div>
      {{/each}}
  
 <script>
-  function go(proid){
+  function go(proid,val){ 
     $.ajax({
-      url:'/cart/'+proid,
+      url:'/cart/'+proid+val,
       method:'get',
       success:((respons)=>{
         console.log("response received")

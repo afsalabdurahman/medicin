@@ -88,7 +88,7 @@ console.log(req.body,"logIn")
 function cat(){
 var products=[
   {
-   image:"images/medicin/drug2.jpg",
+   image:"images/medicin/drug2",
    id:"1",
    discription:"50mg ",
    price:130
@@ -96,7 +96,7 @@ var products=[
    
    },
    {
-    image:"images/medicin/drug3.jpg",
+    image:"images/medicin/drug3",
     id:"2"
     ,
    discription:"50mg ",
@@ -104,14 +104,14 @@ var products=[
 
     },
     {
-      image:"images/medicin/drug4.jpg",
+      image:"images/medicin/drug4",
       id:3
       ,
    discription:"50mg ",
    price:108
       },
       {
-        image:"images/medicin/drug.jpg",
+        image:"images/medicin/drug",
         id:"4"
         ,
    discription:"50mg ",
@@ -148,32 +148,45 @@ console.log(prod)
 
 
 
-router.get('/cart/:id',((req,res)=>{
+router.get('/cart/:id:img',((req,res)=>{
+  var pro=cat()
+  var ids=req.params.id
+  console.log(ids)
+ if(ids){
+  var imagee=pro[ids]
+  console.log(imagee,"this")
+ }
+ 
+usercollection.addCart(imagee).then((response)=>{
+ console.log(response)
   
-  
-  console.log(req.params)
-  var uniq=req.params
-
-
-  
-  usercollection.addCart(uniq).then((response)=>{
-    console.log(response)
-  
-  })
+ })
  res.send('cart added')
 }))
  
 
-  router.get('/order',(req,res)=>{
-  usercollection.cartOrder().then((resp)=>(
-    console.log(resp[0].id,"resolve value")
+//   router.get('/order',(req,res)=>{
+//   usercollection.cartOrder().then((resp)=>{
+// console.log(resp)
+    
+//   }
    
    
-  ))
-if (resp[0].id==products.id){
+//     res.send("cart")
+   
+   
+//     ))
 
-}
-    res.render("cart")
+   
+//   })
+router.get('/order',(req,res)=>{
+  usercollection.cartOrder().then((resp)=>{
+    console.log(resp,"resppppppppppppppp")
+    
+
+    res.render("cart",{resp})
   })
 
+
+})
 module.exports = router;

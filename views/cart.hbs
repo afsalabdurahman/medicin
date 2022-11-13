@@ -35,10 +35,14 @@
                             
                             <tbody>
                                 <tr>
+                                  
+
+                                {{#each resp}}
                                 
-                                   
-                                    <td><img src="/{{respons.id}}" class="img-cart"></td>
-                                    <td><strong>Product 1</strong><p>{{this.discription}}</p></td>
+                              
+
+                                    <td><img src="/{{this.image}}.jpg" class="img-cart"></td>
+                                    <td><strong>Product 1</strong><p>{{this.discription}} </p></td>
                                     <td>
                                     <form class="form-inline">
                                         <input class="form-control" type="text" value="1">
@@ -46,16 +50,21 @@
                                         <a href="#" class="btn btn-primary"><i class="fa fa-trash-o"></i></a>
                                     </form>
                                     </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="total" type="text" value="{{this.price}}" ><p>{{this.price}}<p></td>
+                                    <td>{{this.price}}</td>
+                                    <script>
+                                       var sum = document.getElementById('total').value
+                                       
+                                      console.log(sum)
+                                    </script>
                                 </tr>
-                                
+                                {{/each}}
                                 <tr>
                                     <td colspan="6">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-right">Total Product</td>
-                                    <td>$86.00</td>
+                                    <td id="total"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-right">Total Shipping</td>
@@ -70,6 +79,7 @@
                     </div>
                 </div>
                 </div>
+                <h1 id="g">10</h1>
                 
                 <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Continue Shopping</a>
                 <a href="#" class="btn btn-primary pull-right">Next<span class="glyphicon glyphicon-chevron-right"></span></a>

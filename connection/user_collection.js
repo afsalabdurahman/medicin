@@ -69,14 +69,14 @@ addCart:((proid)=>{
 }),
 cartOrder:(()=>{
     return new Promise(async(resolve, reject) => {
-        let proid= await db.get().collection('Cart').find()  
-        console.log(proid,"proid")
+        let proid= await db.get().collection('Cart').find({}).toArray();  
+        
        if(proid){
        
-         let count= await db.get().collection('Cart').find({"id" : "1"}).count();
-          console.log(count,"count")
-          var arry=[proid,count]
-        resolve(arry)
+         let count1= await db.get().collection('Cart').find({"id" : "1"}).count();
+          
+          var arry={"id":proid,"count":count1}
+        resolve(proid)
 
         }
         })
